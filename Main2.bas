@@ -28,11 +28,12 @@ Dim lb As Label
 End Sub
 
 Sub Activity_Create(FirstTime As Boolean)
-	Banner.Initialize("Banner","ca-app-pub-4173348573252986/2989266950")
+	Activity.Title = "Create Mi Font"
+	Banner.Initialize("Banner","ca-app-pub-4173348573252986/4626693352")
 	Banner.LoadAd
 	Activity.AddView(Banner,0%x,100%y - 50dip,100%x,50dip)
 	
-	Interstitial.Initialize("Interstitial","ca-app-pub-4173348573252986/8896199759")
+	Interstitial.Initialize("Interstitial","ca-app-pub-4173348573252986/7580159759")
 	Interstitial.LoadAd
 	
 	ad.Initialize("ad",60000)
@@ -88,12 +89,15 @@ Sub b3_Click
 	
 	zip.ABZipDirectory(sd & "MIUI Font Maker/Project",sd & "MIUI Font Maker/Output/"&st&".mtz")
 	If File.Exists(File.DirRootExternal & "/MIUI Font Maker/Output",st&".mtz") = True Then
-		Msgbox(st&".mtz file created successfully in"&CRLF&"sdcard/MIUI Font Maker/Output/","Completed!")
-	Else
+		Dim aa As Int
+		aa = Msgbox2(st&".mtz file created successfully in"&CRLF&"sdcard/MIUI Font Maker/Output/","Completed!","Done","","Delete",Null)
+		If aa = DialogResponse.NEGATIVE Then
+		If	File.Delete(File.DirRootExternal & "/MIUI Font Maker/Output",st&".mtz") = True Then ToastMessageShow("Deleted " & st&".mtz",True)
+		End If
+		
+			Else
 		Msgbox("error","")
 	End If
-	File.Delete(File.DirRootExternal & "/MIUI Font Maker","name.txt")
-	File.Delete(File.DirRootExternal & "/MIUI Font Maker/Project","description.xml")
 End Sub
 
 Sub cc_Result (Success As Boolean, Dir As String, FileName As String)
@@ -133,7 +137,7 @@ End Sub
 Sub share_Click
 	Dim ShareIt As Intent
 	copy.clrText
-	copy.setText("You can change easily any font you like into MIUI font (.mtz)"&CRLF&"[Features/] "&CRLF&"Font Name!"&CRLF&"	Author Name!"&CRLF&"Designer Name!"&CRLF&"Version!"&CRLF&"MIUI Version!"&CRLF&"Description!"&CRLF&"Preview Image!"&CRLF&"You can change outsite font in MIUI 8 Without rooting And Designer account :)"&CRLF&"Note: You can convert TrueType Font(.ttf) To .MTZ only!!!"&CRLF&"( Other font extension Not working, eg: otf,woff,ofm,eot)"&CRLF&"Download Free at here : https://goo.gl/ikReWC")
+	copy.setText("You can change easily any font you like into MIUI font (.mtz)"&CRLF&"[Features/] "&CRLF&"Font Name!"&CRLF&"	Author Name!"&CRLF&"Designer Name!"&CRLF&"Version!"&CRLF&"MIUI Version!"&CRLF&"Description!"&CRLF&"Preview Image!"&CRLF&"You can change outsite font in MIUI 8 Without rooting And Designer account :)"&CRLF&"Note: You can convert TrueType Font(.ttf) To .MTZ only!!!"&CRLF&"( Other font extension Not working, eg: otf,woff,ofm,eot)"&CRLF&"Download Free at here : http://bit.ly/2lgBtaj")
 	ShareIt.Initialize (ShareIt.ACTION_SEND,"")
 	ShareIt.SetType ("text/plain")
 	ShareIt.PutExtra ("android.intent.extra.TEXT",copy.getText)

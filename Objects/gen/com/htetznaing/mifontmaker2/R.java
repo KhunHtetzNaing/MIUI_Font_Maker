@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package com.google.android.gms.ads;
+package com.htetznaing.mifontmaker2;
 
 public final class R {
     public static final class attr {
