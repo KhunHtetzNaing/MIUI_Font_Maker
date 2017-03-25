@@ -188,7 +188,7 @@ public class main extends Activity implements B4AActivity{
 			this.eventName = eventName;
 		}
 		public boolean onMenuItemClick(android.view.MenuItem item) {
-			processBA.raiseEvent(item.getTitle(), eventName + "_click");
+			processBA.raiseEventFromUI(item.getTitle(), eventName + "_click");
 			return true;
 		}
 	}
@@ -313,300 +313,311 @@ public class main extends Activity implements B4AActivity{
 	}
     public void onRequestPermissionsResult(int requestCode,
         String permissions[], int[] grantResults) {
-        Object[] o;
-        if (permissions.length > 0)
-            o = new Object[] {permissions[0], grantResults[0] == 0};
-        else
-            o = new Object[] {"", false};
-        processBA.raiseEventFromDifferentThread(null,null, 0, "activity_permissionresult", true, o);
+        for (int i = 0;i < permissions.length;i++) {
+            Object[] o = new Object[] {permissions[i], grantResults[i] == 0};
+            processBA.raiseEventFromDifferentThread(null,null, 0, "activity_permissionresult", true, o);
+        }
             
     }
 
 public anywheresoftware.b4a.keywords.Common __c = null;
 public static anywheresoftware.b4a.objects.Timer _ad = null;
-public anywheresoftware.b4a.objects.EditTextWrapper _edt = null;
-public anywheresoftware.b4a.objects.EditTextWrapper _eda = null;
-public anywheresoftware.b4a.objects.EditTextWrapper _edd = null;
-public anywheresoftware.b4a.objects.EditTextWrapper _edv = null;
-public anywheresoftware.b4a.objects.EditTextWrapper _edu = null;
-public anywheresoftware.b4a.objects.EditTextWrapper _edde = null;
-public anywheresoftware.b4a.objects.ButtonWrapper _b = null;
-public com.AB.ABZipUnzip.ABZipUnzip _zip = null;
-public static String _st = "";
-public static String _sa = "";
-public static String _sd = "";
-public static String _sv = "";
-public static String _su = "";
-public static String _sdd = "";
-public static String _rd = "";
-public static String _rp = "";
-public static String _d = "";
+public anywheresoftware.b4a.objects.ButtonWrapper _b1 = null;
+public anywheresoftware.b4a.objects.ButtonWrapper _b2 = null;
+public anywheresoftware.b4a.objects.ButtonWrapper _b3 = null;
+public anywheresoftware.b4a.objects.ButtonWrapper _b4 = null;
 public b4a.util.BClipboard _copy = null;
-public anywheresoftware.b4a.admobwrapper.AdViewWrapper _banner = null;
-public anywheresoftware.b4a.admobwrapper.AdViewWrapper.InterstitialAdWrapper _interstitial = null;
+public anywheresoftware.b4a.admobwrapper.AdViewWrapper _b = null;
+public anywheresoftware.b4a.admobwrapper.AdViewWrapper.InterstitialAdWrapper _i = null;
+public anywheresoftware.b4a.objects.ImageViewWrapper _iv = null;
+public anywheresoftware.b4a.objects.LabelWrapper _maa = null;
 public com.htetznaing.mifontmaker2.main2 _main2 = null;
 public com.htetznaing.mifontmaker2.changfont _changfont = null;
+public com.htetznaing.mifontmaker2.main1 _main1 = null;
+public com.htetznaing.mifontmaker2.about _about = null;
 
 public static boolean isAnyActivityVisible() {
     boolean vis = false;
 vis = vis | (main.mostCurrent != null);
 vis = vis | (main2.mostCurrent != null);
 vis = vis | (changfont.mostCurrent != null);
+vis = vis | (main1.mostCurrent != null);
+vis = vis | (about.mostCurrent != null);
 return vis;}
 public static String  _activity_create(boolean _firsttime) throws Exception{
- //BA.debugLineNum = 35;BA.debugLine="Sub Activity_Create(FirstTime As Boolean)";
- //BA.debugLineNum = 36;BA.debugLine="Activity.Title = \"Mi Font Maker\"";
-mostCurrent._activity.setTitle((Object)("Mi Font Maker"));
- //BA.debugLineNum = 37;BA.debugLine="Activity.AddMenuItem3(\"Share App\",\"share\",LoadBit";
-mostCurrent._activity.AddMenuItem3((java.lang.CharSequence)("Share App"),"share",(android.graphics.Bitmap)(anywheresoftware.b4a.keywords.Common.LoadBitmap(anywheresoftware.b4a.keywords.Common.File.getDirAssets(),"share.png").getObject()),anywheresoftware.b4a.keywords.Common.True);
- //BA.debugLineNum = 39;BA.debugLine="Banner.Initialize(\"Banner\",\"ca-app-pub-4173348573";
-mostCurrent._banner.Initialize(mostCurrent.activityBA,"Banner","ca-app-pub-4173348573252986/4626693352");
- //BA.debugLineNum = 40;BA.debugLine="Banner.LoadAd";
-mostCurrent._banner.LoadAd();
- //BA.debugLineNum = 41;BA.debugLine="Activity.AddView(Banner,0%x,100%y - 50dip,100%x,5";
-mostCurrent._activity.AddView((android.view.View)(mostCurrent._banner.getObject()),anywheresoftware.b4a.keywords.Common.PerXToCurrent((float) (0),mostCurrent.activityBA),(int) (anywheresoftware.b4a.keywords.Common.PerYToCurrent((float) (100),mostCurrent.activityBA)-anywheresoftware.b4a.keywords.Common.DipToCurrent((int) (50))),anywheresoftware.b4a.keywords.Common.PerXToCurrent((float) (100),mostCurrent.activityBA),anywheresoftware.b4a.keywords.Common.DipToCurrent((int) (50)));
- //BA.debugLineNum = 43;BA.debugLine="Interstitial.Initialize(\"Interstitial\",\"ca-app-pu";
-mostCurrent._interstitial.Initialize(mostCurrent.activityBA,"Interstitial","ca-app-pub-4173348573252986/7580159759");
- //BA.debugLineNum = 44;BA.debugLine="Interstitial.LoadAd";
-mostCurrent._interstitial.LoadAd();
- //BA.debugLineNum = 46;BA.debugLine="ad.Initialize(\"ad\",60000)";
-_ad.Initialize(processBA,"ad",(long) (60000));
- //BA.debugLineNum = 47;BA.debugLine="ad.Enabled = True";
-_ad.setEnabled(anywheresoftware.b4a.keywords.Common.True);
- //BA.debugLineNum = 49;BA.debugLine="If File.Exists(File.DirRootExternal & \"/MIUI Font";
-if (anywheresoftware.b4a.keywords.Common.File.Exists(anywheresoftware.b4a.keywords.Common.File.getDirRootExternal()+"/MIUI Font Maker","d.txt")==anywheresoftware.b4a.keywords.Common.False) { 
- //BA.debugLineNum = 50;BA.debugLine="File.MakeDir(File.DirRootExternal,\"MIUI Font Mak";
-anywheresoftware.b4a.keywords.Common.File.MakeDir(anywheresoftware.b4a.keywords.Common.File.getDirRootExternal(),"MIUI Font Maker/Output");
- //BA.debugLineNum = 51;BA.debugLine="File.Copy(File.DirAssets,\"HtetzNaing.mtz\",File.D";
-anywheresoftware.b4a.keywords.Common.File.Copy(anywheresoftware.b4a.keywords.Common.File.getDirAssets(),"HtetzNaing.mtz",anywheresoftware.b4a.keywords.Common.File.getDirRootExternal()+"/MIUI Font Maker","HtetzNaing.zip");
- //BA.debugLineNum = 52;BA.debugLine="File.Copy(File.DirAssets,\"d.txt\",File.DirRootExt";
-anywheresoftware.b4a.keywords.Common.File.Copy(anywheresoftware.b4a.keywords.Common.File.getDirAssets(),"d.txt",anywheresoftware.b4a.keywords.Common.File.getDirRootExternal()+"/MIUI Font Maker","d.txt");
+int _height = 0;
+ //BA.debugLineNum = 30;BA.debugLine="Sub Activity_Create(FirstTime As Boolean)";
+ //BA.debugLineNum = 31;BA.debugLine="B.Initialize2(\"B\",\"ca-app-pub-4173348573252986/46";
+mostCurrent._b.Initialize2(mostCurrent.activityBA,"B","ca-app-pub-4173348573252986/4626693352",mostCurrent._b.SIZE_SMART_BANNER);
+ //BA.debugLineNum = 32;BA.debugLine="Dim height As Int";
+_height = 0;
+ //BA.debugLineNum = 33;BA.debugLine="If GetDeviceLayoutValues.ApproximateScreenSize <";
+if (anywheresoftware.b4a.keywords.Common.GetDeviceLayoutValues(mostCurrent.activityBA).getApproximateScreenSize()<6) { 
+ //BA.debugLineNum = 34;BA.debugLine="If 100%x > 100%y Then height = 32dip Else height";
+if (anywheresoftware.b4a.keywords.Common.PerXToCurrent((float) (100),mostCurrent.activityBA)>anywheresoftware.b4a.keywords.Common.PerYToCurrent((float) (100),mostCurrent.activityBA)) { 
+_height = anywheresoftware.b4a.keywords.Common.DipToCurrent((int) (32));}
+else {
+_height = anywheresoftware.b4a.keywords.Common.DipToCurrent((int) (50));};
+ }else {
+ //BA.debugLineNum = 36;BA.debugLine="height = 90dip";
+_height = anywheresoftware.b4a.keywords.Common.DipToCurrent((int) (90));
  };
- //BA.debugLineNum = 55;BA.debugLine="zip.ABUnzip(File.DirRootExternal & \"/MIUI Font Ma";
-mostCurrent._zip.ABUnzip(anywheresoftware.b4a.keywords.Common.File.getDirRootExternal()+"/MIUI Font Maker/HtetzNaing.zip",anywheresoftware.b4a.keywords.Common.File.getDirRootExternal()+"/MIUI Font Maker/Project");
- //BA.debugLineNum = 56;BA.debugLine="File.Delete(File.DirRootExternal &  \"/MIUI Font M";
-anywheresoftware.b4a.keywords.Common.File.Delete(anywheresoftware.b4a.keywords.Common.File.getDirRootExternal()+"/MIUI Font Maker","HtetzNaing.zip");
- //BA.debugLineNum = 58;BA.debugLine="edt.Initialize(\"edt\")";
-mostCurrent._edt.Initialize(mostCurrent.activityBA,"edt");
- //BA.debugLineNum = 59;BA.debugLine="edt.Hint = \"Title\"";
-mostCurrent._edt.setHint("Title");
- //BA.debugLineNum = 61;BA.debugLine="eda.Initialize(\"eda\")";
-mostCurrent._eda.Initialize(mostCurrent.activityBA,"eda");
- //BA.debugLineNum = 62;BA.debugLine="eda.Hint = \"Author\"";
-mostCurrent._eda.setHint("Author");
- //BA.debugLineNum = 64;BA.debugLine="edd.Initialize(\"edd\")";
-mostCurrent._edd.Initialize(mostCurrent.activityBA,"edd");
- //BA.debugLineNum = 65;BA.debugLine="edd.Hint = \"Designer\"";
-mostCurrent._edd.setHint("Designer");
- //BA.debugLineNum = 67;BA.debugLine="edv.Initialize(\"edv\")";
-mostCurrent._edv.Initialize(mostCurrent.activityBA,"edv");
- //BA.debugLineNum = 68;BA.debugLine="edv.Hint = \"Version\"";
-mostCurrent._edv.setHint("Version");
- //BA.debugLineNum = 69;BA.debugLine="edv.InputType = edv.INPUT_TYPE_DECIMAL_NUMBERS";
-mostCurrent._edv.setInputType(mostCurrent._edv.INPUT_TYPE_DECIMAL_NUMBERS);
- //BA.debugLineNum = 71;BA.debugLine="edu.Initialize(\"edu\")";
-mostCurrent._edu.Initialize(mostCurrent.activityBA,"edu");
- //BA.debugLineNum = 72;BA.debugLine="edu.Hint = \"UI Version\"";
-mostCurrent._edu.setHint("UI Version");
- //BA.debugLineNum = 73;BA.debugLine="edu.InputType = edu.INPUT_TYPE_DECIMAL_NUMBERS";
-mostCurrent._edu.setInputType(mostCurrent._edu.INPUT_TYPE_DECIMAL_NUMBERS);
- //BA.debugLineNum = 75;BA.debugLine="edde.Initialize(\"edde\")";
-mostCurrent._edde.Initialize(mostCurrent.activityBA,"edde");
- //BA.debugLineNum = 76;BA.debugLine="edde.Hint = \"Description\"";
-mostCurrent._edde.setHint("Description");
- //BA.debugLineNum = 78;BA.debugLine="Activity.AddView(edt,10%x,1%y,80%x,10%y)";
-mostCurrent._activity.AddView((android.view.View)(mostCurrent._edt.getObject()),anywheresoftware.b4a.keywords.Common.PerXToCurrent((float) (10),mostCurrent.activityBA),anywheresoftware.b4a.keywords.Common.PerYToCurrent((float) (1),mostCurrent.activityBA),anywheresoftware.b4a.keywords.Common.PerXToCurrent((float) (80),mostCurrent.activityBA),anywheresoftware.b4a.keywords.Common.PerYToCurrent((float) (10),mostCurrent.activityBA));
- //BA.debugLineNum = 79;BA.debugLine="Activity.AddView(eda,10%x,(edt.Height+edt.Top)+1%y";
-mostCurrent._activity.AddView((android.view.View)(mostCurrent._eda.getObject()),anywheresoftware.b4a.keywords.Common.PerXToCurrent((float) (10),mostCurrent.activityBA),(int) ((mostCurrent._edt.getHeight()+mostCurrent._edt.getTop())+anywheresoftware.b4a.keywords.Common.PerYToCurrent((float) (1),mostCurrent.activityBA)),anywheresoftware.b4a.keywords.Common.PerXToCurrent((float) (80),mostCurrent.activityBA),anywheresoftware.b4a.keywords.Common.PerYToCurrent((float) (10),mostCurrent.activityBA));
- //BA.debugLineNum = 80;BA.debugLine="Activity.AddView(edd,10%x,(eda.Height+eda.Top)+1%";
-mostCurrent._activity.AddView((android.view.View)(mostCurrent._edd.getObject()),anywheresoftware.b4a.keywords.Common.PerXToCurrent((float) (10),mostCurrent.activityBA),(int) ((mostCurrent._eda.getHeight()+mostCurrent._eda.getTop())+anywheresoftware.b4a.keywords.Common.PerYToCurrent((float) (1),mostCurrent.activityBA)),anywheresoftware.b4a.keywords.Common.PerXToCurrent((float) (80),mostCurrent.activityBA),anywheresoftware.b4a.keywords.Common.PerYToCurrent((float) (10),mostCurrent.activityBA));
- //BA.debugLineNum = 81;BA.debugLine="Activity.AddView(edv,10%x,(edd.Height+edd.Top)+1%";
-mostCurrent._activity.AddView((android.view.View)(mostCurrent._edv.getObject()),anywheresoftware.b4a.keywords.Common.PerXToCurrent((float) (10),mostCurrent.activityBA),(int) ((mostCurrent._edd.getHeight()+mostCurrent._edd.getTop())+anywheresoftware.b4a.keywords.Common.PerYToCurrent((float) (1),mostCurrent.activityBA)),anywheresoftware.b4a.keywords.Common.PerXToCurrent((float) (80),mostCurrent.activityBA),anywheresoftware.b4a.keywords.Common.PerYToCurrent((float) (10),mostCurrent.activityBA));
- //BA.debugLineNum = 82;BA.debugLine="Activity.AddView(edu,10%x,(edv.Height+edv.Top)+1%";
-mostCurrent._activity.AddView((android.view.View)(mostCurrent._edu.getObject()),anywheresoftware.b4a.keywords.Common.PerXToCurrent((float) (10),mostCurrent.activityBA),(int) ((mostCurrent._edv.getHeight()+mostCurrent._edv.getTop())+anywheresoftware.b4a.keywords.Common.PerYToCurrent((float) (1),mostCurrent.activityBA)),anywheresoftware.b4a.keywords.Common.PerXToCurrent((float) (80),mostCurrent.activityBA),anywheresoftware.b4a.keywords.Common.PerYToCurrent((float) (10),mostCurrent.activityBA));
- //BA.debugLineNum = 83;BA.debugLine="Activity.AddView(edde,10%x,(edu.Height+edu.Top)+1";
-mostCurrent._activity.AddView((android.view.View)(mostCurrent._edde.getObject()),anywheresoftware.b4a.keywords.Common.PerXToCurrent((float) (10),mostCurrent.activityBA),(int) ((mostCurrent._edu.getHeight()+mostCurrent._edu.getTop())+anywheresoftware.b4a.keywords.Common.PerYToCurrent((float) (1),mostCurrent.activityBA)),anywheresoftware.b4a.keywords.Common.PerXToCurrent((float) (80),mostCurrent.activityBA),anywheresoftware.b4a.keywords.Common.PerYToCurrent((float) (10),mostCurrent.activityBA));
- //BA.debugLineNum = 85;BA.debugLine="b.Initialize(\"b\")";
-mostCurrent._b.Initialize(mostCurrent.activityBA,"b");
- //BA.debugLineNum = 86;BA.debugLine="b.Text = \" Next\"";
-mostCurrent._b.setText((Object)(" Next"));
- //BA.debugLineNum = 87;BA.debugLine="Activity.AddView(b,20%x,(edde.Top+edde.Height)+5%";
-mostCurrent._activity.AddView((android.view.View)(mostCurrent._b.getObject()),anywheresoftware.b4a.keywords.Common.PerXToCurrent((float) (20),mostCurrent.activityBA),(int) ((mostCurrent._edde.getTop()+mostCurrent._edde.getHeight())+anywheresoftware.b4a.keywords.Common.PerYToCurrent((float) (5),mostCurrent.activityBA)),anywheresoftware.b4a.keywords.Common.PerXToCurrent((float) (60),mostCurrent.activityBA),anywheresoftware.b4a.keywords.Common.PerYToCurrent((float) (10),mostCurrent.activityBA));
- //BA.debugLineNum = 88;BA.debugLine="End Sub";
+ //BA.debugLineNum = 38;BA.debugLine="Activity.AddView(B, 0dip, 100%y - height, 100%x,";
+mostCurrent._activity.AddView((android.view.View)(mostCurrent._b.getObject()),anywheresoftware.b4a.keywords.Common.DipToCurrent((int) (0)),(int) (anywheresoftware.b4a.keywords.Common.PerYToCurrent((float) (100),mostCurrent.activityBA)-_height),anywheresoftware.b4a.keywords.Common.PerXToCurrent((float) (100),mostCurrent.activityBA),_height);
+ //BA.debugLineNum = 39;BA.debugLine="B.LoadAd";
+mostCurrent._b.LoadAd();
+ //BA.debugLineNum = 40;BA.debugLine="Log(B)";
+anywheresoftware.b4a.keywords.Common.Log(BA.ObjectToString(mostCurrent._b));
+ //BA.debugLineNum = 42;BA.debugLine="I.Initialize(\"Interstitial\",\"ca-app-pub-417334857";
+mostCurrent._i.Initialize(mostCurrent.activityBA,"Interstitial","ca-app-pub-4173348573252986/7580159759");
+ //BA.debugLineNum = 43;BA.debugLine="I.LoadAd";
+mostCurrent._i.LoadAd();
+ //BA.debugLineNum = 45;BA.debugLine="iv.Initialize(\"\")";
+mostCurrent._iv.Initialize(mostCurrent.activityBA,"");
+ //BA.debugLineNum = 46;BA.debugLine="iv.Bitmap = LoadBitmap(File.DirAssets,\"icon.png\")";
+mostCurrent._iv.setBitmap((android.graphics.Bitmap)(anywheresoftware.b4a.keywords.Common.LoadBitmap(anywheresoftware.b4a.keywords.Common.File.getDirAssets(),"icon.png").getObject()));
+ //BA.debugLineNum = 47;BA.debugLine="iv.Gravity = Gravity.FILL";
+mostCurrent._iv.setGravity(anywheresoftware.b4a.keywords.Common.Gravity.FILL);
+ //BA.debugLineNum = 48;BA.debugLine="Activity.AddView(iv,50%x - 50dip,10dip,100dip,100";
+mostCurrent._activity.AddView((android.view.View)(mostCurrent._iv.getObject()),(int) (anywheresoftware.b4a.keywords.Common.PerXToCurrent((float) (50),mostCurrent.activityBA)-anywheresoftware.b4a.keywords.Common.DipToCurrent((int) (50))),anywheresoftware.b4a.keywords.Common.DipToCurrent((int) (10)),anywheresoftware.b4a.keywords.Common.DipToCurrent((int) (100)),anywheresoftware.b4a.keywords.Common.DipToCurrent((int) (100)));
+ //BA.debugLineNum = 50;BA.debugLine="b1.Initialize(\"b1\")";
+mostCurrent._b1.Initialize(mostCurrent.activityBA,"b1");
+ //BA.debugLineNum = 51;BA.debugLine="b1.Text = \"Create Custom Font\"";
+mostCurrent._b1.setText(BA.ObjectToCharSequence("Create Custom Font"));
+ //BA.debugLineNum = 52;BA.debugLine="Activity.AddView(b1,20%x,iv.Height+iv.Top+1%y,60%";
+mostCurrent._activity.AddView((android.view.View)(mostCurrent._b1.getObject()),anywheresoftware.b4a.keywords.Common.PerXToCurrent((float) (20),mostCurrent.activityBA),(int) (mostCurrent._iv.getHeight()+mostCurrent._iv.getTop()+anywheresoftware.b4a.keywords.Common.PerYToCurrent((float) (1),mostCurrent.activityBA)),anywheresoftware.b4a.keywords.Common.PerXToCurrent((float) (60),mostCurrent.activityBA),anywheresoftware.b4a.keywords.Common.PerYToCurrent((float) (10),mostCurrent.activityBA));
+ //BA.debugLineNum = 54;BA.debugLine="b2.Initialize(\"b2\")";
+mostCurrent._b2.Initialize(mostCurrent.activityBA,"b2");
+ //BA.debugLineNum = 55;BA.debugLine="b2.Text = \"Install Custom Font\"";
+mostCurrent._b2.setText(BA.ObjectToCharSequence("Install Custom Font"));
+ //BA.debugLineNum = 56;BA.debugLine="Activity.AddView(b2,20%x,b1.Height+b1.Top+1%y,60%";
+mostCurrent._activity.AddView((android.view.View)(mostCurrent._b2.getObject()),anywheresoftware.b4a.keywords.Common.PerXToCurrent((float) (20),mostCurrent.activityBA),(int) (mostCurrent._b1.getHeight()+mostCurrent._b1.getTop()+anywheresoftware.b4a.keywords.Common.PerYToCurrent((float) (1),mostCurrent.activityBA)),anywheresoftware.b4a.keywords.Common.PerXToCurrent((float) (60),mostCurrent.activityBA),anywheresoftware.b4a.keywords.Common.PerYToCurrent((float) (10),mostCurrent.activityBA));
+ //BA.debugLineNum = 58;BA.debugLine="b3.Initialize(\"b3\")";
+mostCurrent._b3.Initialize(mostCurrent.activityBA,"b3");
+ //BA.debugLineNum = 59;BA.debugLine="b3.Text = \"More App\"";
+mostCurrent._b3.setText(BA.ObjectToCharSequence("More App"));
+ //BA.debugLineNum = 60;BA.debugLine="Activity.AddView(b3,20%x,b2.Top+b2.Height+1%y,60%";
+mostCurrent._activity.AddView((android.view.View)(mostCurrent._b3.getObject()),anywheresoftware.b4a.keywords.Common.PerXToCurrent((float) (20),mostCurrent.activityBA),(int) (mostCurrent._b2.getTop()+mostCurrent._b2.getHeight()+anywheresoftware.b4a.keywords.Common.PerYToCurrent((float) (1),mostCurrent.activityBA)),anywheresoftware.b4a.keywords.Common.PerXToCurrent((float) (60),mostCurrent.activityBA),anywheresoftware.b4a.keywords.Common.PerYToCurrent((float) (10),mostCurrent.activityBA));
+ //BA.debugLineNum = 62;BA.debugLine="b4.Initialize(\"b4\")";
+mostCurrent._b4.Initialize(mostCurrent.activityBA,"b4");
+ //BA.debugLineNum = 63;BA.debugLine="b4.Text = \"About\"";
+mostCurrent._b4.setText(BA.ObjectToCharSequence("About"));
+ //BA.debugLineNum = 64;BA.debugLine="Activity.AddView(b4,20%x,b3.Top+b3.Height+1%y,60%";
+mostCurrent._activity.AddView((android.view.View)(mostCurrent._b4.getObject()),anywheresoftware.b4a.keywords.Common.PerXToCurrent((float) (20),mostCurrent.activityBA),(int) (mostCurrent._b3.getTop()+mostCurrent._b3.getHeight()+anywheresoftware.b4a.keywords.Common.PerYToCurrent((float) (1),mostCurrent.activityBA)),anywheresoftware.b4a.keywords.Common.PerXToCurrent((float) (60),mostCurrent.activityBA),anywheresoftware.b4a.keywords.Common.PerYToCurrent((float) (10),mostCurrent.activityBA));
+ //BA.debugLineNum = 66;BA.debugLine="Activity.Title = \"Mi Font Maker\"";
+mostCurrent._activity.setTitle(BA.ObjectToCharSequence("Mi Font Maker"));
+ //BA.debugLineNum = 67;BA.debugLine="Activity.AddMenuItem3(\"Share App\",\"share\",LoadBit";
+mostCurrent._activity.AddMenuItem3(BA.ObjectToCharSequence("Share App"),"share",(android.graphics.Bitmap)(anywheresoftware.b4a.keywords.Common.LoadBitmap(anywheresoftware.b4a.keywords.Common.File.getDirAssets(),"share.png").getObject()),anywheresoftware.b4a.keywords.Common.True);
+ //BA.debugLineNum = 69;BA.debugLine="ad.Initialize(\"ad\",100)";
+_ad.Initialize(processBA,"ad",(long) (100));
+ //BA.debugLineNum = 70;BA.debugLine="ad.Enabled = False";
+_ad.setEnabled(anywheresoftware.b4a.keywords.Common.False);
+ //BA.debugLineNum = 72;BA.debugLine="maa.Initialize(\"maa\")";
+mostCurrent._maa.Initialize(mostCurrent.activityBA,"maa");
+ //BA.debugLineNum = 73;BA.debugLine="maa.Text = \"Developed By Myanmar Android App\"";
+mostCurrent._maa.setText(BA.ObjectToCharSequence("Developed By Myanmar Android App"));
+ //BA.debugLineNum = 74;BA.debugLine="maa.TextColor = Colors.Green";
+mostCurrent._maa.setTextColor(anywheresoftware.b4a.keywords.Common.Colors.Green);
+ //BA.debugLineNum = 75;BA.debugLine="maa.Gravity = Gravity.CENTER";
+mostCurrent._maa.setGravity(anywheresoftware.b4a.keywords.Common.Gravity.CENTER);
+ //BA.debugLineNum = 76;BA.debugLine="Activity.AddView(maa,0%x,b4.Top+b4.Height+4%y,100";
+mostCurrent._activity.AddView((android.view.View)(mostCurrent._maa.getObject()),anywheresoftware.b4a.keywords.Common.PerXToCurrent((float) (0),mostCurrent.activityBA),(int) (mostCurrent._b4.getTop()+mostCurrent._b4.getHeight()+anywheresoftware.b4a.keywords.Common.PerYToCurrent((float) (4),mostCurrent.activityBA)),anywheresoftware.b4a.keywords.Common.PerXToCurrent((float) (100),mostCurrent.activityBA),anywheresoftware.b4a.keywords.Common.PerYToCurrent((float) (5),mostCurrent.activityBA));
+ //BA.debugLineNum = 78;BA.debugLine="End Sub";
 return "";
 }
 public static boolean  _activity_keypress(int _keycode) throws Exception{
 int _answ = 0;
 anywheresoftware.b4a.objects.IntentWrapper _facebook = null;
-anywheresoftware.b4a.objects.IntentWrapper _i = null;
- //BA.debugLineNum = 174;BA.debugLine="Sub Activity_KeyPress (KeyCode As Int) As Boolean";
- //BA.debugLineNum = 175;BA.debugLine="Dim Answ As Int";
+anywheresoftware.b4a.objects.IntentWrapper _ii = null;
+ //BA.debugLineNum = 138;BA.debugLine="Sub Activity_KeyPress (KeyCode As Int) As Boolean";
+ //BA.debugLineNum = 139;BA.debugLine="Dim Answ As Int";
 _answ = 0;
- //BA.debugLineNum = 176;BA.debugLine="If KeyCode = KeyCodes.KEYCODE_BACK Then";
+ //BA.debugLineNum = 140;BA.debugLine="If KeyCode = KeyCodes.KEYCODE_BACK Then";
 if (_keycode==anywheresoftware.b4a.keywords.Common.KeyCodes.KEYCODE_BACK) { 
- //BA.debugLineNum = 177;BA.debugLine="Answ = Msgbox2(\"If you want to get new updates o";
-_answ = anywheresoftware.b4a.keywords.Common.Msgbox2("If you want to get new updates on  Facebook? Please Like "+anywheresoftware.b4a.keywords.Common.CRLF+"Myanmar Android Apps Page!","Attention!","Yes","","No",(android.graphics.Bitmap)(anywheresoftware.b4a.keywords.Common.LoadBitmap(anywheresoftware.b4a.keywords.Common.File.getDirAssets(),"fb.png").getObject()),mostCurrent.activityBA);
- //BA.debugLineNum = 178;BA.debugLine="If Answ = DialogResponse.NEGATIVE Then";
+ //BA.debugLineNum = 141;BA.debugLine="Answ = Msgbox2(\"If you want to get new updates o";
+_answ = anywheresoftware.b4a.keywords.Common.Msgbox2(BA.ObjectToCharSequence("If you want to get new updates on  Facebook? Please Like "+anywheresoftware.b4a.keywords.Common.CRLF+"Myanmar Android Apps Page!"),BA.ObjectToCharSequence("Attention!"),"Yes","","No",(android.graphics.Bitmap)(anywheresoftware.b4a.keywords.Common.LoadBitmap(anywheresoftware.b4a.keywords.Common.File.getDirAssets(),"fb.png").getObject()),mostCurrent.activityBA);
+ //BA.debugLineNum = 142;BA.debugLine="If Answ = DialogResponse.NEGATIVE Then";
 if (_answ==anywheresoftware.b4a.keywords.Common.DialogResponse.NEGATIVE) { 
- //BA.debugLineNum = 179;BA.debugLine="Return False";
+ //BA.debugLineNum = 143;BA.debugLine="Return False";
 if (true) return anywheresoftware.b4a.keywords.Common.False;
  };
  };
- //BA.debugLineNum = 182;BA.debugLine="If Answ = DialogResponse.POSITIVE Then";
+ //BA.debugLineNum = 146;BA.debugLine="If Answ = DialogResponse.POSITIVE Then";
 if (_answ==anywheresoftware.b4a.keywords.Common.DialogResponse.POSITIVE) { 
- //BA.debugLineNum = 183;BA.debugLine="Try";
-try { //BA.debugLineNum = 185;BA.debugLine="Dim Facebook As Intent";
+ //BA.debugLineNum = 147;BA.debugLine="Try";
+try { //BA.debugLineNum = 149;BA.debugLine="Dim Facebook As Intent";
 _facebook = new anywheresoftware.b4a.objects.IntentWrapper();
- //BA.debugLineNum = 187;BA.debugLine="Facebook.Initialize(Facebook.ACTION_VIEW, \"fb:/";
+ //BA.debugLineNum = 151;BA.debugLine="Facebook.Initialize(Facebook.ACTION_VIEW, \"fb:/";
 _facebook.Initialize(_facebook.ACTION_VIEW,"fb://page/627699334104477");
- //BA.debugLineNum = 188;BA.debugLine="StartActivity(Facebook)";
+ //BA.debugLineNum = 152;BA.debugLine="StartActivity(Facebook)";
 anywheresoftware.b4a.keywords.Common.StartActivity(mostCurrent.activityBA,(Object)(_facebook.getObject()));
  } 
        catch (Exception e14) {
-			processBA.setLastException(e14); //BA.debugLineNum = 192;BA.debugLine="Dim i As Intent";
-_i = new anywheresoftware.b4a.objects.IntentWrapper();
- //BA.debugLineNum = 193;BA.debugLine="i.Initialize(i.ACTION_VIEW, \"https://m.facebook";
-_i.Initialize(_i.ACTION_VIEW,"https://m.facebook.com/MmFreeAndroidApps");
- //BA.debugLineNum = 195;BA.debugLine="StartActivity(i)";
-anywheresoftware.b4a.keywords.Common.StartActivity(mostCurrent.activityBA,(Object)(_i.getObject()));
+			processBA.setLastException(e14); //BA.debugLineNum = 156;BA.debugLine="Dim ii As Intent";
+_ii = new anywheresoftware.b4a.objects.IntentWrapper();
+ //BA.debugLineNum = 157;BA.debugLine="ii.Initialize(ii.ACTION_VIEW, \"https://m.facebo";
+_ii.Initialize(_ii.ACTION_VIEW,"https://m.facebook.com/MmFreeAndroidApps");
+ //BA.debugLineNum = 159;BA.debugLine="StartActivity(i)";
+anywheresoftware.b4a.keywords.Common.StartActivity(mostCurrent.activityBA,(Object)(mostCurrent._i.getObject()));
  };
- //BA.debugLineNum = 198;BA.debugLine="Return False";
+ //BA.debugLineNum = 162;BA.debugLine="Return False";
 if (true) return anywheresoftware.b4a.keywords.Common.False;
  };
- //BA.debugLineNum = 200;BA.debugLine="End Sub";
+ //BA.debugLineNum = 164;BA.debugLine="End Sub";
 return false;
 }
 public static String  _activity_pause(boolean _userclosed) throws Exception{
- //BA.debugLineNum = 158;BA.debugLine="Sub Activity_Pause (UserClosed As Boolean)";
- //BA.debugLineNum = 160;BA.debugLine="End Sub";
+ //BA.debugLineNum = 122;BA.debugLine="Sub Activity_Pause (UserClosed As Boolean)";
+ //BA.debugLineNum = 124;BA.debugLine="End Sub";
 return "";
 }
 public static String  _activity_resume() throws Exception{
- //BA.debugLineNum = 154;BA.debugLine="Sub Activity_Resume";
- //BA.debugLineNum = 156;BA.debugLine="End Sub";
+ //BA.debugLineNum = 118;BA.debugLine="Sub Activity_Resume";
+ //BA.debugLineNum = 120;BA.debugLine="End Sub";
 return "";
 }
 public static String  _ad_tick() throws Exception{
- //BA.debugLineNum = 150;BA.debugLine="Sub ad_Tick";
- //BA.debugLineNum = 151;BA.debugLine="If Interstitial.Ready Then Interstitial.Show";
-if (mostCurrent._interstitial.getReady()) { 
-mostCurrent._interstitial.Show();};
- //BA.debugLineNum = 152;BA.debugLine="End Sub";
+ //BA.debugLineNum = 113;BA.debugLine="Sub ad_Tick";
+ //BA.debugLineNum = 114;BA.debugLine="If I.Ready Then I.Show Else I.LoadAd";
+if (mostCurrent._i.getReady()) { 
+mostCurrent._i.Show();}
+else {
+mostCurrent._i.LoadAd();};
+ //BA.debugLineNum = 115;BA.debugLine="ad.Enabled = False";
+_ad.setEnabled(anywheresoftware.b4a.keywords.Common.False);
+ //BA.debugLineNum = 116;BA.debugLine="End Sub";
 return "";
 }
-public static String  _b_click() throws Exception{
- //BA.debugLineNum = 90;BA.debugLine="Sub b_Click";
- //BA.debugLineNum = 92;BA.debugLine="If edt.Text = \"\" Then";
-if ((mostCurrent._edt.getText()).equals("")) { 
- //BA.debugLineNum = 93;BA.debugLine="st = \"MIUI Font\"";
-mostCurrent._st = "MIUI Font";
- }else {
- //BA.debugLineNum = 95;BA.debugLine="st = edt.Text";
-mostCurrent._st = mostCurrent._edt.getText();
- };
- //BA.debugLineNum = 99;BA.debugLine="If eda.Text = \"\" Then";
-if ((mostCurrent._eda.getText()).equals("")) { 
- //BA.debugLineNum = 100;BA.debugLine="sa = \"Khun Htetz Naing\"";
-mostCurrent._sa = "Khun Htetz Naing";
- }else {
- //BA.debugLineNum = 102;BA.debugLine="sa = eda.Text";
-mostCurrent._sa = mostCurrent._eda.getText();
- };
- //BA.debugLineNum = 106;BA.debugLine="If edd.Text = \"\" Then";
-if ((mostCurrent._edd.getText()).equals("")) { 
- //BA.debugLineNum = 107;BA.debugLine="sd = \"Khun Htetz Naing\"";
-mostCurrent._sd = "Khun Htetz Naing";
- }else {
- //BA.debugLineNum = 109;BA.debugLine="sd = edd.Text";
-mostCurrent._sd = mostCurrent._edd.getText();
- };
- //BA.debugLineNum = 113;BA.debugLine="If edv.Text = \"\" Then";
-if ((mostCurrent._edv.getText()).equals("")) { 
- //BA.debugLineNum = 114;BA.debugLine="sv = \"1.0\"";
-mostCurrent._sv = "1.0";
- }else {
- //BA.debugLineNum = 116;BA.debugLine="sv = edv.Text";
-mostCurrent._sv = mostCurrent._edv.getText();
- };
- //BA.debugLineNum = 120;BA.debugLine="If edu.Text = \"\" Then";
-if ((mostCurrent._edu.getText()).equals("")) { 
- //BA.debugLineNum = 121;BA.debugLine="su = \"8\"";
-mostCurrent._su = "8";
- }else {
- //BA.debugLineNum = 123;BA.debugLine="su = edu.Text";
-mostCurrent._su = mostCurrent._edu.getText();
- };
- //BA.debugLineNum = 127;BA.debugLine="If edde.Text = \"\" Then";
-if ((mostCurrent._edde.getText()).equals("")) { 
- //BA.debugLineNum = 128;BA.debugLine="sdd = \"This font was packed with MIUI Font Maker";
-mostCurrent._sdd = "This font was packed with MIUI Font Maker app. Download free at here : http://bit.ly/2lgBtaj";
- }else {
- //BA.debugLineNum = 130;BA.debugLine="sdd = edde.Text";
-mostCurrent._sdd = mostCurrent._edde.getText();
- };
- //BA.debugLineNum = 133;BA.debugLine="rd = \"<?xml version=@1.0@ encoding=@utf-8@ standa";
-mostCurrent._rd = "<?xml version=@1.0@ encoding=@utf-8@ standalone=@no@?>"+anywheresoftware.b4a.keywords.Common.CRLF+"<MIUI-Theme>"+anywheresoftware.b4a.keywords.Common.CRLF+"<title>"+mostCurrent._st+"</title>"+anywheresoftware.b4a.keywords.Common.CRLF+"<designer>"+mostCurrent._sd+"</designer>"+anywheresoftware.b4a.keywords.Common.CRLF+"<author>"+mostCurrent._sa+"</author>"+anywheresoftware.b4a.keywords.Common.CRLF+"<version>"+mostCurrent._sv+"</version>"+anywheresoftware.b4a.keywords.Common.CRLF+"<uiVersion>"+mostCurrent._su+"</uiVersion>"+anywheresoftware.b4a.keywords.Common.CRLF+"<description>"+mostCurrent._sdd+"</description>"+anywheresoftware.b4a.keywords.Common.CRLF+"</MIUI-Theme>";
- //BA.debugLineNum = 134;BA.debugLine="d = File.ReadString(File.DirRootExternal & \"/MIUI";
-mostCurrent._d = anywheresoftware.b4a.keywords.Common.File.ReadString(anywheresoftware.b4a.keywords.Common.File.getDirRootExternal()+"/MIUI Font Maker","d.txt");
- //BA.debugLineNum = 135;BA.debugLine="rp = rd.Replace(\"@\",d)";
-mostCurrent._rp = mostCurrent._rd.replace("@",mostCurrent._d);
- //BA.debugLineNum = 136;BA.debugLine="File.Delete(File.DirRootExternal & \"/MIUI Font Ma";
-anywheresoftware.b4a.keywords.Common.File.Delete(anywheresoftware.b4a.keywords.Common.File.getDirRootExternal()+"/MIUI Font Maker/Project","description.xml");
- //BA.debugLineNum = 137;BA.debugLine="File.WriteString(File.DirRootExternal & \"/MIUI Fo";
-anywheresoftware.b4a.keywords.Common.File.WriteString(anywheresoftware.b4a.keywords.Common.File.getDirRootExternal()+"/MIUI Font Maker/Project","description.xml",mostCurrent._rp);
- //BA.debugLineNum = 138;BA.debugLine="If File.Exists(File.DirRootExternal & \"/MIUI Font";
-if (anywheresoftware.b4a.keywords.Common.File.Exists(anywheresoftware.b4a.keywords.Common.File.getDirRootExternal()+"/MIUI Font Maker","name.txt")==anywheresoftware.b4a.keywords.Common.True) { 
- //BA.debugLineNum = 139;BA.debugLine="File.Delete(File.DirRootExternal & \"/MIUI Font M";
-anywheresoftware.b4a.keywords.Common.File.Delete(anywheresoftware.b4a.keywords.Common.File.getDirRootExternal()+"/MIUI Font Maker","name.txt");
- };
- //BA.debugLineNum = 141;BA.debugLine="File.WriteString(File.DirRootExternal & \"/MIUI Fo";
-anywheresoftware.b4a.keywords.Common.File.WriteString(anywheresoftware.b4a.keywords.Common.File.getDirRootExternal()+"/MIUI Font Maker","name.txt",mostCurrent._st);
- //BA.debugLineNum = 142;BA.debugLine="Log(rp)";
-anywheresoftware.b4a.keywords.Common.Log(mostCurrent._rp);
- //BA.debugLineNum = 143;BA.debugLine="StartActivity(Main2)";
-anywheresoftware.b4a.keywords.Common.StartActivity(mostCurrent.activityBA,(Object)(mostCurrent._main2.getObject()));
- //BA.debugLineNum = 144;BA.debugLine="End Sub";
+public static String  _b_adscreendismissed() throws Exception{
+ //BA.debugLineNum = 175;BA.debugLine="Sub B_AdScreenDismissed";
+ //BA.debugLineNum = 176;BA.debugLine="Log(\"B Dismissed\")";
+anywheresoftware.b4a.keywords.Common.Log("B Dismissed");
+ //BA.debugLineNum = 177;BA.debugLine="End Sub";
+return "";
+}
+public static String  _b_failedtoreceivead(String _errorcode) throws Exception{
+ //BA.debugLineNum = 168;BA.debugLine="Sub B_FailedToReceiveAd (ErrorCode As String)";
+ //BA.debugLineNum = 169;BA.debugLine="Log(\"B failed: \" & ErrorCode)";
+anywheresoftware.b4a.keywords.Common.Log("B failed: "+_errorcode);
+ //BA.debugLineNum = 170;BA.debugLine="End Sub";
+return "";
+}
+public static String  _b_receivead() throws Exception{
+ //BA.debugLineNum = 171;BA.debugLine="Sub B_ReceiveAd";
+ //BA.debugLineNum = 172;BA.debugLine="Log(\"B received\")";
+anywheresoftware.b4a.keywords.Common.Log("B received");
+ //BA.debugLineNum = 173;BA.debugLine="End Sub";
+return "";
+}
+public static String  _b1_click() throws Exception{
+ //BA.debugLineNum = 92;BA.debugLine="Sub b1_Click";
+ //BA.debugLineNum = 93;BA.debugLine="ad.Enabled = True";
+_ad.setEnabled(anywheresoftware.b4a.keywords.Common.True);
+ //BA.debugLineNum = 94;BA.debugLine="StartActivity(Main1)";
+anywheresoftware.b4a.keywords.Common.StartActivity(mostCurrent.activityBA,(Object)(mostCurrent._main1.getObject()));
+ //BA.debugLineNum = 95;BA.debugLine="End Sub";
+return "";
+}
+public static String  _b2_click() throws Exception{
+ //BA.debugLineNum = 97;BA.debugLine="Sub b2_Click";
+ //BA.debugLineNum = 98;BA.debugLine="ad.Enabled = True";
+_ad.setEnabled(anywheresoftware.b4a.keywords.Common.True);
+ //BA.debugLineNum = 99;BA.debugLine="StartActivity(ChangFont)";
+anywheresoftware.b4a.keywords.Common.StartActivity(mostCurrent.activityBA,(Object)(mostCurrent._changfont.getObject()));
+ //BA.debugLineNum = 100;BA.debugLine="End Sub";
+return "";
+}
+public static String  _b3_click() throws Exception{
+anywheresoftware.b4a.phone.Phone.PhoneIntents _pp = null;
+ //BA.debugLineNum = 102;BA.debugLine="Sub b3_Click";
+ //BA.debugLineNum = 103;BA.debugLine="ad.Enabled = True";
+_ad.setEnabled(anywheresoftware.b4a.keywords.Common.True);
+ //BA.debugLineNum = 104;BA.debugLine="Dim pp As PhoneIntents";
+_pp = new anywheresoftware.b4a.phone.Phone.PhoneIntents();
+ //BA.debugLineNum = 105;BA.debugLine="StartActivity(pp.OpenBrowser(\"http://www.myanmara";
+anywheresoftware.b4a.keywords.Common.StartActivity(mostCurrent.activityBA,(Object)(_pp.OpenBrowser("http://www.myanmarandroidapp.com/search/label/My%20Apps")));
+ //BA.debugLineNum = 106;BA.debugLine="End Sub";
+return "";
+}
+public static String  _b4_click() throws Exception{
+ //BA.debugLineNum = 108;BA.debugLine="Sub b4_Click";
+ //BA.debugLineNum = 109;BA.debugLine="ad.Enabled = True";
+_ad.setEnabled(anywheresoftware.b4a.keywords.Common.True);
+ //BA.debugLineNum = 110;BA.debugLine="StartActivity(About)";
+anywheresoftware.b4a.keywords.Common.StartActivity(mostCurrent.activityBA,(Object)(mostCurrent._about.getObject()));
+ //BA.debugLineNum = 111;BA.debugLine="End Sub";
 return "";
 }
 public static String  _globals() throws Exception{
  //BA.debugLineNum = 21;BA.debugLine="Sub Globals";
- //BA.debugLineNum = 22;BA.debugLine="Dim edt,eda,edd,edv,edu,edde As EditText";
-mostCurrent._edt = new anywheresoftware.b4a.objects.EditTextWrapper();
-mostCurrent._eda = new anywheresoftware.b4a.objects.EditTextWrapper();
-mostCurrent._edd = new anywheresoftware.b4a.objects.EditTextWrapper();
-mostCurrent._edv = new anywheresoftware.b4a.objects.EditTextWrapper();
-mostCurrent._edu = new anywheresoftware.b4a.objects.EditTextWrapper();
-mostCurrent._edde = new anywheresoftware.b4a.objects.EditTextWrapper();
- //BA.debugLineNum = 23;BA.debugLine="Dim b As Button";
-mostCurrent._b = new anywheresoftware.b4a.objects.ButtonWrapper();
- //BA.debugLineNum = 24;BA.debugLine="Dim zip As ABZipUnzip";
-mostCurrent._zip = new com.AB.ABZipUnzip.ABZipUnzip();
- //BA.debugLineNum = 26;BA.debugLine="Dim st,sa,sd,sv,su,sdd As String";
-mostCurrent._st = "";
-mostCurrent._sa = "";
-mostCurrent._sd = "";
-mostCurrent._sv = "";
-mostCurrent._su = "";
-mostCurrent._sdd = "";
- //BA.debugLineNum = 27;BA.debugLine="Dim rd,rp As String";
-mostCurrent._rd = "";
-mostCurrent._rp = "";
- //BA.debugLineNum = 28;BA.debugLine="Dim d As String";
-mostCurrent._d = "";
- //BA.debugLineNum = 29;BA.debugLine="Dim copy As BClipboard";
+ //BA.debugLineNum = 22;BA.debugLine="Dim b1,b2,b3,b4 As Button";
+mostCurrent._b1 = new anywheresoftware.b4a.objects.ButtonWrapper();
+mostCurrent._b2 = new anywheresoftware.b4a.objects.ButtonWrapper();
+mostCurrent._b3 = new anywheresoftware.b4a.objects.ButtonWrapper();
+mostCurrent._b4 = new anywheresoftware.b4a.objects.ButtonWrapper();
+ //BA.debugLineNum = 23;BA.debugLine="Dim copy As BClipboard";
 mostCurrent._copy = new b4a.util.BClipboard();
- //BA.debugLineNum = 31;BA.debugLine="Dim Banner As AdView";
-mostCurrent._banner = new anywheresoftware.b4a.admobwrapper.AdViewWrapper();
- //BA.debugLineNum = 32;BA.debugLine="Dim Interstitial As InterstitialAd";
-mostCurrent._interstitial = new anywheresoftware.b4a.admobwrapper.AdViewWrapper.InterstitialAdWrapper();
- //BA.debugLineNum = 33;BA.debugLine="End Sub";
+ //BA.debugLineNum = 24;BA.debugLine="Dim B As AdView";
+mostCurrent._b = new anywheresoftware.b4a.admobwrapper.AdViewWrapper();
+ //BA.debugLineNum = 25;BA.debugLine="Dim I As InterstitialAd";
+mostCurrent._i = new anywheresoftware.b4a.admobwrapper.AdViewWrapper.InterstitialAdWrapper();
+ //BA.debugLineNum = 26;BA.debugLine="Dim iv As ImageView";
+mostCurrent._iv = new anywheresoftware.b4a.objects.ImageViewWrapper();
+ //BA.debugLineNum = 27;BA.debugLine="dim maa as Label";
+mostCurrent._maa = new anywheresoftware.b4a.objects.LabelWrapper();
+ //BA.debugLineNum = 28;BA.debugLine="End Sub";
 return "";
 }
-public static String  _interstitial_adclosed() throws Exception{
- //BA.debugLineNum = 146;BA.debugLine="Sub Interstitial_AdClosed";
- //BA.debugLineNum = 147;BA.debugLine="Interstitial.LoadAd";
-mostCurrent._interstitial.LoadAd();
- //BA.debugLineNum = 148;BA.debugLine="End Sub";
+public static String  _i_adclosed() throws Exception{
+ //BA.debugLineNum = 181;BA.debugLine="Sub I_AdClosed";
+ //BA.debugLineNum = 182;BA.debugLine="I.LoadAd";
+mostCurrent._i.LoadAd();
+ //BA.debugLineNum = 183;BA.debugLine="End Sub";
+return "";
+}
+public static String  _i_adopened() throws Exception{
+ //BA.debugLineNum = 194;BA.debugLine="Sub I_adopened";
+ //BA.debugLineNum = 195;BA.debugLine="Log(\"I Opened\")";
+anywheresoftware.b4a.keywords.Common.Log("I Opened");
+ //BA.debugLineNum = 196;BA.debugLine="End Sub";
+return "";
+}
+public static String  _i_failedtoreceivead(String _errorcode) throws Exception{
+ //BA.debugLineNum = 189;BA.debugLine="Sub I_FailedToReceiveAd (ErrorCode As String)";
+ //BA.debugLineNum = 190;BA.debugLine="Log(\"I not Received - \" &\"Error Code: \"&ErrorCode";
+anywheresoftware.b4a.keywords.Common.Log("I not Received - "+"Error Code: "+_errorcode);
+ //BA.debugLineNum = 191;BA.debugLine="I.LoadAd";
+mostCurrent._i.LoadAd();
+ //BA.debugLineNum = 192;BA.debugLine="End Sub";
+return "";
+}
+public static String  _i_receivead() throws Exception{
+ //BA.debugLineNum = 185;BA.debugLine="Sub I_ReceiveAd";
+ //BA.debugLineNum = 186;BA.debugLine="Log(\"I Received\")";
+anywheresoftware.b4a.keywords.Common.Log("I Received");
+ //BA.debugLineNum = 187;BA.debugLine="End Sub";
+return "";
+}
+public static String  _maa_click() throws Exception{
+anywheresoftware.b4a.objects.IntentWrapper _facebook = null;
+ //BA.debugLineNum = 80;BA.debugLine="Sub maa_Click";
+ //BA.debugLineNum = 81;BA.debugLine="Try";
+try { //BA.debugLineNum = 82;BA.debugLine="Dim Facebook As Intent";
+_facebook = new anywheresoftware.b4a.objects.IntentWrapper();
+ //BA.debugLineNum = 83;BA.debugLine="Facebook.Initialize(Facebook.ACTION_VIEW, \"fb://";
+_facebook.Initialize(_facebook.ACTION_VIEW,"fb://page/627699334104477");
+ //BA.debugLineNum = 84;BA.debugLine="StartActivity(Facebook)";
+anywheresoftware.b4a.keywords.Common.StartActivity(mostCurrent.activityBA,(Object)(_facebook.getObject()));
+ } 
+       catch (Exception e6) {
+			processBA.setLastException(e6); //BA.debugLineNum = 86;BA.debugLine="Dim Facebook As Intent";
+_facebook = new anywheresoftware.b4a.objects.IntentWrapper();
+ //BA.debugLineNum = 87;BA.debugLine="Facebook.Initialize(Facebook.ACTION_VIEW, \"https";
+_facebook.Initialize(_facebook.ACTION_VIEW,"https://m.facebook.com/MmFreeAndroidApps");
+ //BA.debugLineNum = 88;BA.debugLine="StartActivity(Facebook)";
+anywheresoftware.b4a.keywords.Common.StartActivity(mostCurrent.activityBA,(Object)(_facebook.getObject()));
+ };
+ //BA.debugLineNum = 90;BA.debugLine="End Sub";
 return "";
 }
 
@@ -618,6 +629,8 @@ public static void initializeProcessGlobals() {
 		        main._process_globals();
 main2._process_globals();
 changfont._process_globals();
+main1._process_globals();
+about._process_globals();
 		
         } catch (Exception e) {
 			throw new RuntimeException(e);
@@ -632,26 +645,26 @@ return "";
 }
 public static String  _share_click() throws Exception{
 anywheresoftware.b4a.objects.IntentWrapper _shareit = null;
- //BA.debugLineNum = 162;BA.debugLine="Sub share_Click";
- //BA.debugLineNum = 163;BA.debugLine="Dim ShareIt As Intent";
+ //BA.debugLineNum = 126;BA.debugLine="Sub share_Click";
+ //BA.debugLineNum = 127;BA.debugLine="Dim ShareIt As Intent";
 _shareit = new anywheresoftware.b4a.objects.IntentWrapper();
- //BA.debugLineNum = 164;BA.debugLine="copy.clrText";
+ //BA.debugLineNum = 128;BA.debugLine="copy.clrText";
 mostCurrent._copy.clrText(mostCurrent.activityBA);
- //BA.debugLineNum = 165;BA.debugLine="copy.setText(\"You can change easily any font you";
-mostCurrent._copy.setText(mostCurrent.activityBA,"You can change easily any font you like into MIUI font (.mtz)"+anywheresoftware.b4a.keywords.Common.CRLF+"[Features/] "+anywheresoftware.b4a.keywords.Common.CRLF+"Font Name!"+anywheresoftware.b4a.keywords.Common.CRLF+"	Author Name!"+anywheresoftware.b4a.keywords.Common.CRLF+"Designer Name!"+anywheresoftware.b4a.keywords.Common.CRLF+"Version!"+anywheresoftware.b4a.keywords.Common.CRLF+"MIUI Version!"+anywheresoftware.b4a.keywords.Common.CRLF+"Description!"+anywheresoftware.b4a.keywords.Common.CRLF+"Preview Image!"+anywheresoftware.b4a.keywords.Common.CRLF+"You can change outsite font in MIUI 8 Without rooting And Designer account :)"+anywheresoftware.b4a.keywords.Common.CRLF+"Note: You can convert TrueType Font(.ttf) To .MTZ only!!!"+anywheresoftware.b4a.keywords.Common.CRLF+"( Other font extension Not working, eg: otf,woff,ofm,eot)"+anywheresoftware.b4a.keywords.Common.CRLF+"Download Free at here : http://bit.ly/2lgBtaj");
- //BA.debugLineNum = 166;BA.debugLine="ShareIt.Initialize (ShareIt.ACTION_SEND,\"\")";
+ //BA.debugLineNum = 129;BA.debugLine="copy.setText(\"You can change easily any font you";
+mostCurrent._copy.setText(mostCurrent.activityBA,"You can change easily any font you like into MIUI font (.mtz)"+anywheresoftware.b4a.keywords.Common.CRLF+"[Features/] "+anywheresoftware.b4a.keywords.Common.CRLF+"Font Name!"+anywheresoftware.b4a.keywords.Common.CRLF+"	Author Name!"+anywheresoftware.b4a.keywords.Common.CRLF+"Designer Name!"+anywheresoftware.b4a.keywords.Common.CRLF+"Version!"+anywheresoftware.b4a.keywords.Common.CRLF+"MIUI Version!"+anywheresoftware.b4a.keywords.Common.CRLF+"Description!"+anywheresoftware.b4a.keywords.Common.CRLF+"Preview Image!"+anywheresoftware.b4a.keywords.Common.CRLF+"You can change outsite font in MIUI 8 Without rooting And Designer account :)"+anywheresoftware.b4a.keywords.Common.CRLF+"Note: You can convert TrueType Font(.ttf) To .MTZ only!!!"+anywheresoftware.b4a.keywords.Common.CRLF+"( Other font extension Not working, eg: otf,woff,ofm,eot)"+anywheresoftware.b4a.keywords.Common.CRLF+"Download Free at here : http://bit.ly/2nhLHbh");
+ //BA.debugLineNum = 130;BA.debugLine="ShareIt.Initialize (ShareIt.ACTION_SEND,\"\")";
 _shareit.Initialize(_shareit.ACTION_SEND,"");
- //BA.debugLineNum = 167;BA.debugLine="ShareIt.SetType (\"text/plain\")";
+ //BA.debugLineNum = 131;BA.debugLine="ShareIt.SetType (\"text/plain\")";
 _shareit.SetType("text/plain");
- //BA.debugLineNum = 168;BA.debugLine="ShareIt.PutExtra (\"android.intent.extra.TEXT\",cop";
+ //BA.debugLineNum = 132;BA.debugLine="ShareIt.PutExtra (\"android.intent.extra.TEXT\",cop";
 _shareit.PutExtra("android.intent.extra.TEXT",(Object)(mostCurrent._copy.getText(mostCurrent.activityBA)));
- //BA.debugLineNum = 169;BA.debugLine="ShareIt.PutExtra (\"android.intent.extra.SUBJECT\",";
+ //BA.debugLineNum = 133;BA.debugLine="ShareIt.PutExtra (\"android.intent.extra.SUBJECT\",";
 _shareit.PutExtra("android.intent.extra.SUBJECT",(Object)("Get Free!!"));
- //BA.debugLineNum = 170;BA.debugLine="ShareIt.WrapAsIntentChooser(\"Share App Via...\")";
+ //BA.debugLineNum = 134;BA.debugLine="ShareIt.WrapAsIntentChooser(\"Share App Via...\")";
 _shareit.WrapAsIntentChooser("Share App Via...");
- //BA.debugLineNum = 171;BA.debugLine="StartActivity (ShareIt)";
+ //BA.debugLineNum = 135;BA.debugLine="StartActivity (ShareIt)";
 anywheresoftware.b4a.keywords.Common.StartActivity(mostCurrent.activityBA,(Object)(_shareit.getObject()));
- //BA.debugLineNum = 172;BA.debugLine="End Sub";
+ //BA.debugLineNum = 136;BA.debugLine="End Sub";
 return "";
 }
 }

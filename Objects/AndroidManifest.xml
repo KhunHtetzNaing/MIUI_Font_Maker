@@ -2,8 +2,8 @@
 <manifest
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.htetznaing.mifontmaker2"
-	android:versionCode="2"
-	android:versionName="1.1"
+	android:versionCode="3"
+	android:versionName="1.2"
 	android:installLocation="internalOnly">
 	
 	<uses-sdk android:minSdkVersion="5" android:targetSdkVersion="19"/>
@@ -11,9 +11,9 @@
 	    android:normalScreens="true" 
 	    android:smallScreens="true" 
 	    android:anyDensity="true"/>
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 	<uses-permission android:name="android.permission.INTERNET"/>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 	<application
 		android:icon="@drawable/icon"
 		android:label="Mi Font Maker (FontToMtz)">
@@ -53,6 +53,20 @@
 			android:windowSoftInputMode="stateHidden"
 			android:launchMode="singleTop"
 			android:name=".changfont"
+			android:label="Mi Font Maker (FontToMtz)"
+			android:screenOrientation="unspecified">
+		</activity>
+		<activity
+			android:windowSoftInputMode="stateHidden"
+			android:launchMode="singleTop"
+			android:name=".main1"
+			android:label="Mi Font Maker (FontToMtz)"
+			android:screenOrientation="unspecified">
+		</activity>
+		<activity
+			android:windowSoftInputMode="stateHidden"
+			android:launchMode="singleTop"
+			android:name=".about"
 			android:label="Mi Font Maker (FontToMtz)"
 			android:screenOrientation="unspecified">
 		</activity>

@@ -1,27 +1,35 @@
-﻿Version=6.5
-NumberOfModules=2
+﻿Version=6.8
+NumberOfModules=4
 Module1=Main2
 Module2=ChangFont
+Module3=Main1
+Module4=About
 Build1=Default,com.htetznaing.mifontmaker2
 ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: http://www.b4x.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="5" android:targetSdkVersion="19"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~'End of default text.~\n~'************ Google Play Services Base ************~\n~AddApplicationText(~\n~   <activity android:name="com.google.android.gms.common.api.GoogleApiActivity"~\n~  android:theme="@android:style/Theme.Translucent.NoTitleBar"~\n~  android:exported="false"/>~\n~    <meta-data~\n~  android:name="com.google.android.gms.version"~\n~  android:value="@integer/google_play_services_version" />~\n~)~\n~~\n~'************ Google Play Services Base (end) ************~\n~~\n~'************ Firebase Ads ************~\n~AddApplicationText(~\n~  <activity~\n~  android:name="com.google.android.gms.ads.AdActivity"~\n~  android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"~\n~  android:theme="@android:style/Theme.Translucent" />~\n~  <activity android:name="com.google.android.gms.ads.purchase.InAppPurchaseActivity"~\n~  android:theme="@style/Theme.IAPTheme"/>~\n~)~\n~'************ Firebase Ads (end) ************
 IconFile=
-NumberOfFiles=5
-File1=change.png
-File2=d.txt
-File3=fb.png
-File4=HtetzNaing.mtz
-File5=share.png
-NumberOfLibraries=5
+NumberOfFiles=8
+File1=bg.jpg
+File2=change.png
+File3=d.txt
+File4=fb.png
+File5=fuck
+File6=HtetzNaing.mtz
+File7=icon.png
+File8=share.png
+NumberOfLibraries=8
 Library1=core
 Library2=abzipunzip
 Library3=phone
 Library4=clipboard
 Library5=firebaseadmob
+Library6=mlfiles
+Library7=messharelibrary
+Library8=stringutils
 @EndOfDesignText@
 #Region  Project Attributes 
 	#ApplicationLabel: Mi Font Maker (FontToMtz)
-	#VersionCode: 2
-	#VersionName: 1.1
+	#VersionCode: 3
+	#VersionName: 1.2
 	'SupportedOrientations possible values: unspecified, landscape or portrait.
 	#SupportedOrientations: unspecified
 	#CanInstallToExternalStorage: False
@@ -39,136 +47,100 @@ Sub Process_Globals
 End Sub
 
 Sub Globals
-Dim edt,eda,edd,edv,edu,edde As EditText
-Dim b As Button
-Dim zip As ABZipUnzip
-
-	Dim st,sa,sd,sv,su,sdd As String
-	Dim rd,rp As String
-	Dim d As String
+Dim b1,b2,b3,b4 As Button
 	Dim copy As BClipboard
-	
-	Dim Banner As AdView
-	Dim Interstitial As InterstitialAd
+	Dim B As AdView
+	Dim I As InterstitialAd
+	Dim iv As ImageView
+	dim maa as Label
 End Sub
 
 Sub Activity_Create(FirstTime As Boolean)
+	B.Initialize2("B","ca-app-pub-4173348573252986/4626693352",B.SIZE_SMART_BANNER)
+	Dim height As Int
+	If GetDeviceLayoutValues.ApproximateScreenSize < 6 Then
+		If 100%x > 100%y Then height = 32dip Else height = 50dip
+	Else
+		height = 90dip
+	End If
+	Activity.AddView(B, 0dip, 100%y - height, 100%x, height)
+	B.LoadAd
+	Log(B)
+	
+	I.Initialize("Interstitial","ca-app-pub-4173348573252986/7580159759")
+	I.LoadAd
+	
+	iv.Initialize("")
+	iv.Bitmap = LoadBitmap(File.DirAssets,"icon.png")
+	iv.Gravity = Gravity.FILL
+	Activity.AddView(iv,50%x - 50dip,10dip,100dip,100dip)
+	
+	b1.Initialize("b1")
+	b1.Text = "Create Custom Font"
+	Activity.AddView(b1,20%x,iv.Height+iv.Top+1%y,60%x,10%y)
+	
+	b2.Initialize("b2")
+	b2.Text = "Install Custom Font"
+	Activity.AddView(b2,20%x,b1.Height+b1.Top+1%y,60%x,10%y)
+	
+	b3.Initialize("b3")
+	b3.Text = "More App"
+	Activity.AddView(b3,20%x,b2.Top+b2.Height+1%y,60%x,10%y)
+	
+	b4.Initialize("b4")
+	b4.Text = "About"
+	Activity.AddView(b4,20%x,b3.Top+b3.Height+1%y,60%x,10%y)
+	
 	Activity.Title = "Mi Font Maker"
 	Activity.AddMenuItem3("Share App","share",LoadBitmap(File.DirAssets,"share.png"),True)
 	
-	Banner.Initialize("Banner","ca-app-pub-4173348573252986/4626693352")
-	Banner.LoadAd
-	Activity.AddView(Banner,0%x,100%y - 50dip,100%x,50dip)
+	ad.Initialize("ad",100)
+	ad.Enabled = False
 	
-	Interstitial.Initialize("Interstitial","ca-app-pub-4173348573252986/7580159759")
-	Interstitial.LoadAd
+	maa.Initialize("maa")
+	maa.Text = "Developed By Myanmar Android App"
+	maa.TextColor = Colors.Green
+	maa.Gravity = Gravity.CENTER
+	Activity.AddView(maa,0%x,b4.Top+b4.Height+4%y,100%x,5%y)
 	
-	ad.Initialize("ad",60000)
+End Sub
+
+Sub maa_Click
+	Try
+		Dim Facebook As Intent
+		Facebook.Initialize(Facebook.ACTION_VIEW, "fb://page/627699334104477")
+		StartActivity(Facebook)
+	Catch
+		Dim Facebook As Intent
+		Facebook.Initialize(Facebook.ACTION_VIEW, "https://m.facebook.com/MmFreeAndroidApps")
+		StartActivity(Facebook)
+	End Try
+End Sub
+
+Sub b1_Click
 	ad.Enabled = True
-	
-	If File.Exists(File.DirRootExternal & "/MIUI Font Maker","d.txt") = False Then
-		File.MakeDir(File.DirRootExternal,"MIUI Font Maker/Output")
-		File.Copy(File.DirAssets,"HtetzNaing.mtz",File.DirRootExternal & "/MIUI Font Maker","HtetzNaing.zip")
-		File.Copy(File.DirAssets,"d.txt",File.DirRootExternal & "/MIUI Font Maker","d.txt")
-End If
-
-	zip.ABUnzip(File.DirRootExternal & "/MIUI Font Maker/HtetzNaing.zip",File.DirRootExternal & "/MIUI Font Maker/Project")
-	File.Delete(File.DirRootExternal &  "/MIUI Font Maker","HtetzNaing.zip")
-	
-edt.Initialize("edt")
-edt.Hint = "Title"
-
-eda.Initialize("eda")
-eda.Hint = "Author"
-
-edd.Initialize("edd")
-edd.Hint = "Designer"
-
-edv.Initialize("edv")
-edv.Hint = "Version"
-edv.InputType = edv.INPUT_TYPE_DECIMAL_NUMBERS
-
-edu.Initialize("edu")
-edu.Hint = "UI Version"
-edu.InputType = edu.INPUT_TYPE_DECIMAL_NUMBERS
-
-edde.Initialize("edde")
-edde.Hint = "Description"
-
-Activity.AddView(edt,10%x,1%y,80%x,10%y)
-Activity.AddView(eda,10%x,(edt.Height+edt.Top)+1%y,80%x,10%y)
-	Activity.AddView(edd,10%x,(eda.Height+eda.Top)+1%y,80%x,10%y)
-	Activity.AddView(edv,10%x,(edd.Height+edd.Top)+1%y,80%x,10%y)
-	Activity.AddView(edu,10%x,(edv.Height+edv.Top)+1%y,80%x,10%y)
-	Activity.AddView(edde,10%x,(edu.Height+edu.Top)+1%y,80%x,10%y)
-	
-	b.Initialize("b")
-	b.Text = " Next"
-	Activity.AddView(b,20%x,(edde.Top+edde.Height)+5%y,60%x,10%y)
+	StartActivity(Main1)
 End Sub
 
-Sub b_Click
-	'Title
-	If edt.Text = "" Then
-			st = "MIUI Font"
-		Else
-			st = edt.Text
-	End If
-	
-	'Author
-	If eda.Text = "" Then
-		sa = "Khun Htetz Naing"
-	Else
-		sa = eda.Text
-	End If
-	
-	'Designer
-	If edd.Text = "" Then
-		sd = "Khun Htetz Naing"
-	Else
-		sd = edd.Text
-	End If
-	
-	'Version
-	If edv.Text = "" Then
-		sv = "1.0"
-	Else
-		sv = edv.Text
-	End If
-	
-	'UI Version
-	If edu.Text = "" Then
-		su = "8"
-	Else
-		su = edu.Text
-	End If
-	
-	'Description
-	If edde.Text = "" Then
-		sdd = "This font was packed with MIUI Font Maker app. Download free at here : http://bit.ly/2lgBtaj"
-	Else
-		sdd = edde.Text
-	End If
-	
-	rd = "<?xml version=@1.0@ encoding=@utf-8@ standalone=@no@?>"&CRLF&"<MIUI-Theme>"&CRLF&"<title>"&st&"</title>"&CRLF&"<designer>"&sd&"</designer>"&CRLF&"<author>"&sa&"</author>"& CRLF &"<version>"&sv&"</version>"& CRLF &"<uiVersion>"&su&"</uiVersion>"& CRLF &"<description>"&sdd&"</description>"& CRLF & "</MIUI-Theme>"
-	d = File.ReadString(File.DirRootExternal & "/MIUI Font Maker","d.txt")
-	rp = rd.Replace("@",d)
-	File.Delete(File.DirRootExternal & "/MIUI Font Maker/Project","description.xml")
-	File.WriteString(File.DirRootExternal & "/MIUI Font Maker/Project","description.xml",rp)
-	If File.Exists(File.DirRootExternal & "/MIUI Font Maker","name.txt") = True Then
-		File.Delete(File.DirRootExternal & "/MIUI Font Maker","name.txt")
-	End If
-	File.WriteString(File.DirRootExternal & "/MIUI Font Maker","name.txt",st)
-	Log(rp)
-	StartActivity(Main2)
+Sub b2_Click
+	ad.Enabled = True
+	StartActivity(ChangFont)
 End Sub
 
-Sub Interstitial_AdClosed
-	Interstitial.LoadAd
+Sub b3_Click
+	ad.Enabled = True
+	Dim pp As PhoneIntents
+	StartActivity(pp.OpenBrowser("http://www.myanmarandroidapp.com/search/label/My%20Apps"))
+End Sub
+
+Sub b4_Click
+	ad.Enabled = True
+	StartActivity(About)
 End Sub
 
 Sub ad_Tick
-	If Interstitial.Ready Then Interstitial.Show
+	If I.Ready Then I.Show Else I.LoadAd
+	ad.Enabled = False
 End Sub
 
 Sub Activity_Resume
@@ -182,7 +154,7 @@ End Sub
 Sub share_Click
 	Dim ShareIt As Intent
 	copy.clrText
-	copy.setText("You can change easily any font you like into MIUI font (.mtz)"&CRLF&"[Features/] "&CRLF&"Font Name!"&CRLF&"	Author Name!"&CRLF&"Designer Name!"&CRLF&"Version!"&CRLF&"MIUI Version!"&CRLF&"Description!"&CRLF&"Preview Image!"&CRLF&"You can change outsite font in MIUI 8 Without rooting And Designer account :)"&CRLF&"Note: You can convert TrueType Font(.ttf) To .MTZ only!!!"&CRLF&"( Other font extension Not working, eg: otf,woff,ofm,eot)"&CRLF&"Download Free at here : http://bit.ly/2lgBtaj")
+	copy.setText("You can change easily any font you like into MIUI font (.mtz)"&CRLF&"[Features/] "&CRLF&"Font Name!"&CRLF&"	Author Name!"&CRLF&"Designer Name!"&CRLF&"Version!"&CRLF&"MIUI Version!"&CRLF&"Description!"&CRLF&"Preview Image!"&CRLF&"You can change outsite font in MIUI 8 Without rooting And Designer account :)"&CRLF&"Note: You can convert TrueType Font(.ttf) To .MTZ only!!!"&CRLF&"( Other font extension Not working, eg: otf,woff,ofm,eot)"&CRLF&"Download Free at here : http://bit.ly/2nhLHbh")
 	ShareIt.Initialize (ShareIt.ACTION_SEND,"")
 	ShareIt.SetType ("text/plain")
 	ShareIt.PutExtra ("android.intent.extra.TEXT",copy.getText)
@@ -209,12 +181,44 @@ Sub Activity_KeyPress (KeyCode As Int) As Boolean
  
 		Catch
  
-			Dim i As Intent
-			i.Initialize(i.ACTION_VIEW, "https://m.facebook.com/MmFreeAndroidApps")
+			Dim ii As Intent
+			ii.Initialize(ii.ACTION_VIEW, "https://m.facebook.com/MmFreeAndroidApps")
  
 			StartActivity(i)
  
 		End Try
 		Return False
 	End If
+End Sub
+
+
+'Banner Ads
+Sub B_FailedToReceiveAd (ErrorCode As String)
+	Log("B failed: " & ErrorCode)
+End Sub
+Sub B_ReceiveAd
+	Log("B received")
+End Sub
+
+Sub B_AdScreenDismissed
+	Log("B Dismissed")
+End Sub
+
+
+'Interstitial Ads
+Sub I_AdClosed
+	I.LoadAd
+End Sub
+
+Sub I_ReceiveAd
+	Log("I Received")
+End Sub
+
+Sub I_FailedToReceiveAd (ErrorCode As String)
+	Log("I not Received - " &"Error Code: "&ErrorCode)
+	I.LoadAd
+End Sub
+
+Sub I_adopened
+	Log("I Opened")
 End Sub
